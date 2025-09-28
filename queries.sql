@@ -18,9 +18,9 @@ ORDER BY region, quarter, sales_rank;
 
 -- 4.2 Running monthly sales totals
 WITH monthly_sales AS (
-  SELECT TRUNC(sale_date, 'MM') AS month_start, SUM(amount) AS monthly_sales
+  SELECT DATE_FORMAT(sale_date, '%Y-%m-01') AS month_start, SUM(amount) AS monthly_sales
   FROM transactions
-  GROUP BY TRUNC(sale_date, 'MM')
+  GROUP BY DATE_FORMAT(sale_date, '%Y-%m-01')
 )
 SELECT month_start,
        monthly_sales,
@@ -30,9 +30,9 @@ ORDER BY month_start;
 
 -- 4.3 Month-over-month growth
 WITH monthly_sales AS (
-  SELECT TRUNC(sale_date, 'MM') AS month_start, SUM(amount) AS monthly_sales
+  SELECT DATE_FORMAT(sale_date, '%Y-%m-01') AS month_start, SUM(amount) AS monthly_sales
   FROM transactions
-  GROUP BY TRUNC(sale_date, 'MM')
+  GROUP BY DATE_FORMAT(sale_date, '%Y-%m-01')
 )
 SELECT month_start,
        monthly_sales,
@@ -52,13 +52,11 @@ ORDER BY spend_quartile, total_spent DESC;
 
 -- 4.5 3-month moving average
 WITH monthly_sales AS (
-  SELECT TRUNC(sale_date, 'MM') AS month_start, SUM(amount) AS monthly_sales
+  SELECT DATE_FORMAT(sale_date, '%Y-%m-01') AS month_start, SUM(amount) AS monthly_sales
   FROM transactions
-  GROUP BY TRUNC(sale_date, 'MM')
+  GROUP BY DATE_FORMAT(sale_date, '%Y-%m-01')
 )
 SELECT month_start,
        monthly_sales,
        ROUND(AVG(monthly_sales) OVER (ORDER BY month_start ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS moving_avg_3m
 FROM monthly_sales
-ORDER BY month_start;
-
