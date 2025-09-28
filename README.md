@@ -13,3 +13,19 @@ Determine month over month growth: LAG()/LEAD().
 Segment customers into quartiles: NTILE(4).
 Compute 3 month moving averages: AVG() OVER().
 
+RESULT ANALYSIS
+Best products: Coffee Beans consistently ranked #1 in Kigali and Rubavu, while in Huye and Musanze, Green Tea was superior.
+Sales trends: Sales had a consistent upward slope each month from January to March, then dropped slightly in April before soaring in June.
+Customer spending: The highest quartile (Q1) customers accounted for more than 60
+
+References
+Mode Analytics. SQL Window Functions Tutorial.
+GeeksforGeeks. SQL Window Functions in SQL. 
+DataCamp. SQL Window Functions Cheat Sheet. 
+SQLite. Window Functions Documentation. 
+YouTube video: “Introduction to SQL Window Functions”. 
+MySQL 8.0 Reference Manual 
+Academic or BI articles for customer segmentation and retail analytics.
+Academic Journal of Business Analytics. (2023). Customer Segmentation in Retail.
+TechTarget. (2025). Business Intelligence with SQL.
+Claude AI. (2025). SQL code generation and query explanations.
