@@ -2,17 +2,19 @@
 SELECT region, quarter, product_name, total_sales, sales_rank
 FROM (
   SELECT c.region,
-         'Q' || TO_CHAR(t.sale_date, 'Q') || '-' || TO_CHAR(t.sale_date, 'YYYY') AS quarter,
+         CONCAT('Q', QUARTER(t.sale_date), '-', YEAR(t.sale_date)) AS quarter,
          p.name AS product_name,
          SUM(t.amount) AS total_sales,
-         RANK() OVER (PARTITION BY c.region, TO_CHAR(t.sale_date, 'Q') ORDER BY SUM(t.amount) DESC) AS sales_rank
+         RANK() OVER (PARTITION BY c.region, QUARTER(t.sale_date)
+                      ORDER BY SUM(t.amount) DESC) AS sales_rank
   FROM transactions t
   JOIN customers c ON t.customer_id = c.customer_id
   JOIN products p ON t.product_id = p.product_id
-  GROUP BY c.region, TO_CHAR(t.sale_date, 'Q'), TO_CHAR(t.sale_date, 'YYYY'), p.name
-)
+  GROUP BY c.region, QUARTER(t.sale_date), YEAR(t.sale_date), p.name, t.sale_date
+) ranked
 WHERE sales_rank <= 5
 ORDER BY region, quarter, sales_rank;
+
 
 -- 4.2 Running monthly sales totals
 WITH monthly_sales AS (
