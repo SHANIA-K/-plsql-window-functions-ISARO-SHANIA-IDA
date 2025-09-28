@@ -60,3 +60,4 @@ SELECT month_start,
        monthly_sales,
        ROUND(AVG(monthly_sales) OVER (ORDER BY month_start ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS moving_avg_3m
 FROM monthly_sales
+ORDER BY month_start;
